@@ -1,0 +1,4 @@
+[
+    {"email": "Subject: Meeting tomorrow at 10 AM. Please confirm your availability.", "category": "Work", "features": ["Meeting", "10 AM", "Confirm availability"]},
+    {"email": "Congratulations! You have won a lottery of $1,000,000. Click here to claim.", "category": "Spam", "features": ["Lottery", "Click here"]}
+]
