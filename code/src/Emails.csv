@@ -1,0 +1,68 @@
+﻿EmailSubject,email,request_type,sub_request_type,key_attributes,main_intent
+Email 1: Principal Repayment Confirmation,"Sunrise Bank Corporation
+123 Financial Street, New York, NY 10001
+Date: 15-Apr-2025
+ATTN: John Doe
+Phone: +1 (212) 555-7890
+Fax: +1 (212) 555-7891
+Email: johndoe@wellsfargo.com
+Re: ABC Holdings LLC – Principal Repayment
+Deal CUSIP: 123456A78
+Deal ISIN: US1234567890
+Facility CUSIP: 987654B32
+Facility ISIN: US0987654321
+Lender MEI: LND098765
+Effective 15-Apr-2025, ABC Holdings LLC has elected to make a principal repayment of $250,000 against the loan amount of $5,000,000.
+Previous Global Principal Balance: $4,750,000
+New Global Principal Balance: $4,500,000
+This loan was effective on 01-Jan-2024 and is scheduled to reprice on 01-Jul-2025.
+Your share of the repayment is $250,000.
+We will remit $250,000 on the effective date. Please note that if:
+(i) the Borrower has not made such payment;
+(ii) any payment you receive is in excess of what was paid by the Borrower; or
+(iii) we notify you that the payment was made in error, you agree to return such payment.
+For: Sunrise Bank Corporation
+ABA Number: 111002348
+Account No.: XXXXXXXX4720
+Reference: ABC Holdings LLC – Principal Repayment
+Thanks & Regards,
+Jane Smith
++1 (646) 555-1234
+Sunrise Bank Corporation",Loan Payment,Principal Repayment,"{'Loan Amount': '$5,000,000', 'Borrower Name': 'ABC Holdings LLC', 'Repayment Amount': '$250,000', 'Due Date': '15-Apr-2025', 'Lender Name': 'Sunrise Bank Corporation'}",To confirm a principal repayment
+ Loan Modification: Interest Rate Change - ABC Loan Facility,"Dear [Recipient Name],
+
+This email is to inform you about a modification to the interest rate on your ABC Loan Facility.
+
+The previous interest rate of 5.2% will be changed to 5.5%, effective from 01-Apr-2025.
+
+Please ensure your records are updated accordingly.
+
+If you have any questions, please do not hesitate to contact us.",Loan Modification,Interest Rate Change,"{'Previous Interest Rate': '5.2%', 'New Interest Rate': '5.5%', 'Effective Date': '01-Apr-2025', 'Loan Reference': 'ABC Loan Facility'}",To notify about a change in interest rate
+Email 3: Loan Disbursement Confirmation,"[Sunrise Bank Corporation]
+123 Finance Street, New York, NY 10001
+Date: 22-Mar-2025
+ATTN: Robert Brown
+Phone: (555) 345-6789
+Fax: (555) 765-4321
+Email: robert.brown@sunrisebank.com
+Re: Loan Disbursement to XYZ Enterprises
+Effective 22-Mar-2025, we have disbursed loan funds to XYZ Enterprises under the following terms:
+Disbursed Amount: $3,500,000
+Facility Type: Term Loan A
+The funds have been transferred to the designated borrower account as per the agreed terms. If you require further details, please let us know.
+Thanks & Regards,
+Susan Clark
+Senior Loan Officer
+Sunrise Bank Corporation
+susan.clark@sunrisebank.com",Loan Disbursement,Fund Transfer,"{'Disbursed Amount': '$3,500,000', 'Borrower Name': 'XYZ Enterprises', 'Facility Type': 'Term Loan A', 'Disbursement Date': '22-Mar-2025'}",To confirm the disbursement of loan funds
+Payment Reminder: Loan Installment Due - XYZ Holdings $100MM Term Loan,"Dear [Recipient Name],
+
+This is a friendly reminder that your loan installment for the XYZ Holdings $100MM Term Loan is due on 30-Mar-2025.
+
+The outstanding amount due is $750,000.
+
+Please note that a penalty of 2% will be applied for any late payments made after the due date.
+
+Kindly ensure timely payment to avoid any late fees.
+
+If you have any questions or require further assistance, please contact us",Payment Reminder,Loan Installment Due,"{'Payment Due Date': '30-Mar-2025', 'Outstanding Amount': '$750,000', 'Penalty Clause': '2% late fee after due date', 'Loan Reference': 'XYZ Holdings $100MM Term Loan'}",To remind about an upcoming payment
