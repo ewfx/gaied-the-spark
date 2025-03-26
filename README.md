@@ -14,7 +14,10 @@
 ---
 
 ## 🎯 Introduction
-A brief overview of your project and its purpose. Mention which problem statement are your attempting to solve. Keep it concise and engaging.
+
+The Email Analyzer is a Streamlit-based AI-powered tool designed to analyze commercial banking
+emails, categorize them, extract key attributes, and generate structured responses. The solution
+leverages OpenAI&#39;s GPT model for text processing and categorization.
 
 ## 🎥 Demo
 🔗 [Live Demo](#) (if applicable)  
@@ -24,37 +27,69 @@ A brief overview of your project and its purpose. Mention which problem statemen
 ![Screenshot 1](link-to-image)
 
 ## 💡 Inspiration
-What inspired you to create this project? Describe the problem you're solving.
+
+Exploring different Models to identify the most efficient AI framework for accurate email categorization,
+key attribute extraction, and confidence scoring, ensuring optimal performance and reliability.
 
 ## ⚙️ What It Does
-Explain the key features and functionalities of your project.
+
+The solution leverages OpenAI GPT model for text processing and categorization of Emails.
+
+Key Features:
+
+ Multi-file support (TXT, EML, MSG, PDF)
+ Automated categorization based on AI analysis
+ SR number tracking for follow-ups
+ Confidence scoring for reliable outputs
+ Extensible architecture for API integrations
 
 ## 🛠️ How We Built It
-Briefly outline the technologies, frameworks, and tools used in development.
+
+Technologies Used:
+
+ Programming Language: Python
+ Framework: Streamlit
+ AI Model: OpenAI GPT-4o-mini
+ Data Processing: Regex, JSON
+ Storage: Local File System (with potential for API integration)
+ Environment Management: dotenv (for API keys)
 
 ## 🚧 Challenges We Faced
-Describe the major technical or non-technical challenges your team encountered.
+
+identifying the right Model and Framework to use for Email Analysis and key feature extractions.
 
 ## 🏃 How to Run
 1. Clone the repository  
-   ```sh
-   git clone https://github.com/your-repo.git
+
+https://github.com/ewfx/gaied-the-spark
    ```
 2. Install dependencies  
-   ```sh
-   npm install  # or pip install -r requirements.txt (for Python)
+   
+pip install extract-msg 
+pip install pdfminer.six python-docx
+pip install pywin32
+pip install streamlit
+pip install langchain
+pip install pytesseract
    ```
 3. Run the project  
-   ```sh
-   npm start  # or python app.py
+   
+   python emailanalyzer.py
    ```
 
 ## 🏗️ Tech Stack
-- 🔹 Frontend: React / Vue / Angular
-- 🔹 Backend: Node.js / FastAPI / Django
-- 🔹 Database: PostgreSQL / Firebase
-- 🔹 Other: OpenAI API / Twilio / Stripe
+
+LangChain-powered GPT-4o via OpenAI API
+Streamlit
+Python
 
 ## 👥 Team
-- **Your Name** - [GitHub](#) | [LinkedIn](#)
-- **Teammate 2** - [GitHub](#) | [LinkedIn](#)
+
+Team Name: The Spark
+
+Team Members:
+
+ Thiru
+ Praveen
+ Magdaleen
+ Selvasathya
