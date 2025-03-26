@@ -1,8 +1,11 @@
+import datetime
 import os
+import random
 import re
 import json
+import string
 import streamlit as st
-import numpy as np
+import uuid  # For SR Number Generation
 from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
@@ -29,10 +32,21 @@ st.set_page_config(page_title="📩 Email Analyzer", layout="wide")
 def preprocess_email(email_text):
     email_text = re.sub(r"\n{2,}", "\n", email_text.strip())  
     email_text = re.sub(r"\s{2,}", " ", email_text)  
-    email_text = re.sub(r"(\d{1,2})[-/]([A-Za-z]{3,})[-/](\d{4})", r"\3-\2-\1", email_text)
-    email_text = re.sub(r"(Account #:\s?)\d{6,}", r"\1[REDACTED]", email_text)
-    email_text = re.sub(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b", "[EMAIL REDACTED]", email_text)
+    #email_text = re.sub(r"(Account #:\s?)\d{6,}", r"\1[REDACTED]", email_text)
+    #email_text = re.sub(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b", "[EMAIL REDACTED]", email_text)
     return email_text
+
+# Function to check if an existing SR number is in the email
+def check_existing_sr_number(email_text):
+    # Updated regex to match SR numbers with date, time, and random alphanumeric part
+    sr_match = re.search(r"\bSR-\d{8}-\d{4}-[A-Z0-9]{6}\b", email_text, re.IGNORECASE)  
+    return sr_match.group(0) if sr_match else None
+
+# Generate SR Number in DDMMYYYY-XXXXXX format
+def generate_sr_number():
+    date_part = datetime.datetime.now().strftime("%d%m%Y-%H%M")
+    random_part = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    return f"SR-{date_part}-{random_part}"
 
 # Streamlit UI
 st.title("📩 Commercial Banking Email Analyzer")
@@ -47,6 +61,15 @@ if uploaded_file is not None:
 if st.button("Analyze Email") and email_text.strip():
     with st.spinner("Preprocessing email..."):
         clean_email_text = preprocess_email(email_text)
+
+    # Check if the email contains an SR number
+    existing_sr_number = check_existing_sr_number(clean_email_text)
+
+     # If SR number exists, mark it as a follow-up, else generate a new SR number
+    if existing_sr_number:
+        sr_number = f"Duplicate/Follow-up - {existing_sr_number}"
+    else:
+        sr_number = generate_sr_number()
 
     final_prompt = f"""
     You are an AI email analyzer for a commercial bank lending service team. Categorize the email and extract key details.
@@ -85,12 +108,16 @@ if st.button("Analyze Email") and email_text.strip():
             return round(max(0.1, min(1.0, confidence)), 2)
 
         response_json["confidence_score"] = compute_confidence(response_json)
+        response_json["sr_number"] = sr_number
 
         st.subheader("📜 Final Output (Response)")
         st.json(response_json)
 
         st.subheader("🔢 Confidence Score")
         st.metric(label="Confidence Score", value=f"{response_json['confidence_score']:.2f}")
+
+        st.subheader("📌 SR Number")
+        st.write(f"**{response_json['sr_number']}**")
 
     except json.JSONDecodeError:
         st.error("Error parsing AI response. AI did not return valid JSON.")
