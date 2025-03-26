@@ -1,0 +1,13 @@
+{
+    "request_types": {
+      "Loan Servicing": ["Loan Facility Update", "Loan Account Status Inquiry", "Interest Rate Adjustment"],
+      "Loan Origination": ["New Loan Request", "Loan Application Status", "Pre-qualification Inquiry"],
+      "Credit & Risk Assessment": ["Credit Limit Increase", "Financial Statement Review", "Covenant Compliance"],
+      "Information Request": ["Document Requirement", "Regulatory Compliance Inquiry", "General Inquiry"]
+    },
+    "key_attributes": [
+      "Loan Reference", "Borrower Name", "Bank Name", "Deal Name", "Commitment Amount",
+      "Interest Rate", "Payment Schedule", "Collateral Details", "Regulatory Compliance"
+    ]
+  }
+  
