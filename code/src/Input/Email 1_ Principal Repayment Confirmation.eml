@@ -1,0 +1,351 @@
+Received: from LO0P265MB6897.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:2d7::14)
+ by LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM with HTTPS; Mon, 24 Mar 2025
+ 13:48:13 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=uqoxaTf+kuCSmAQuFSVqzNI69IJ2LS9FRKFKXHKP4iQIrjIMNYRNeAVb0MQuQw6ZiFKWncZdFsT2WRLAZDZe37vmV2MDZgB7IXbXkUr4T5LUgKYCvOxDCxbnhI/ileJ+zvps0gw5aEaK8BLpHqzeLkheLdIJN7OkytsxanNnCBfWuDq9c8pM9OW/UcYkog4Zv5/OWSDhgA4Z/IOLLnZV+iCEZBfzpBOzM4GvteRacVBgO7/CaZ4eb5gPk8+paB7q316q65Hr96QEP2VxrHd9BXO6Rrz4RvJbzndcFZu1UU1j6LJ88tQm/OeTVeKKTRodMnAU0udREVGkCgm3kfcH4Q==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=L8mtqnjLi4kNeG5YL8rP4mt/bOBtcn2dMQro3SjjgVw=;
+ b=hVoB/q5I4KLgblg6CaXPrRUJp0kgp4Wkm10Fjh5TLmJI8omOZ60K5EIvppB02cYbh6qHf+1jWxi1n3XWGNjURrekjloWSk7+gkxqG1FT6zm1PKCzEbs84ho+hzY6uB36nRPGhQCnUG7RuCpH00WAZeqpWvkx56vrLsmmKA/dFGHZp245fw4N3mYUwcRCXUoFESKjYP4dVNlJXSws0zqOjFChX7lx5ndW4UC42+qR0/Wr9YbDbDNrQkolHt4HETtJ/WPaALyGh3ZFocRFH7g08IWhLapdysaNoYqFt40cgTo4h9eRdehDyjhIwrnu0BqIN7KSZ1mvrKEDChZjn+DfjQ==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.103.37.48) smtp.rcpttodomain=outlook.com smtp.mailfrom=outlook.com;
+ dmarc=pass (p=none sp=quarantine pct=100) action=none
+ header.from=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com; arc=pass (0 oda=0 ltdi=1)
+Received: from BL1PR13CA0223.namprd13.prod.outlook.com (2603:10b6:208:2bf::18)
+ by LO0P265MB6897.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:2d7::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.25; Mon, 24 Mar
+ 2025 13:48:12 +0000
+Received: from BL02EPF0001A0FF.namprd03.prod.outlook.com
+ (2603:10b6:208:2bf:cafe::f9) by BL1PR13CA0223.outlook.office365.com
+ (2603:10b6:208:2bf::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.42 via Frontend Transport; Mon,
+ 24 Mar 2025 13:48:11 +0000
+Authentication-Results: spf=pass (sender IP is 52.103.37.48)
+ smtp.mailfrom=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com;dmarc=pass action=none
+ header.from=outlook.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of outlook.com designates
+ 52.103.37.48 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.103.37.48; helo=LO0P265CU003.outbound.protection.outlook.com;
+ pr=C
+Received: from LO0P265CU003.outbound.protection.outlook.com (52.103.37.48) by
+ BL02EPF0001A0FF.mail.protection.outlook.com (10.167.242.106) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.20
+ via Frontend Transport; Mon, 24 Mar 2025 13:48:11 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:EE4CCA1A11AD9553AEDEB9432AA6D5BCA396C6BA2D8E9966A155DCB5CE261F1A;UpperCasedChecksum:0A71DAE70BE439B3C186BF472E7DFB62DEB4C25434CA58C2D063EA269E4E5436;SizeAsReceived:7950;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AhlcrrlV8M970aS5POTLpioU6ATBo756s+6HHFEzIQ/u7CNgcjSRLcBQMeQC6vq98JFZr8Q5yk2ktHYmLCCrBk9OIr+g5cfpQMMfTm+HoVMnHkMSED2Vs6QcLm88ZXJYJccZ96GFFPKPMeAQ9WQlSDKYuTGp2EmMlebEMUnd1wvo38dSmlJzqUkhRopbNpt67d/anCmeEbtmaCPCk7v+60PafobOiZyxU7HCQ93S4O6SMZOGCfaIEFAAWH97rmmXG+EUbqaKQ4mZdDQHx8wKG4TB2WuYHD9kKJZJAC+Bjc4Rb0mFvDHsKbUvqV5KNQqR9OEih2gMEilZW6Ahfp8Xkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=L8mtqnjLi4kNeG5YL8rP4mt/bOBtcn2dMQro3SjjgVw=;
+ b=FfvKLQ6HM3RsWApyRBRGARnxKBSMVzGUU4F+lT9pgpgn15v1ESD1H8Z8VCImAKgqs2TAkjhYaf7vFArF1RLz5qD4mxc/VFBq9AzflvAcGN4gEfPfgtQ1NfQzPo79PRveqHx1RvNXvV7shDzdr72+rDaaFe2wf3Esp2er1h/hVzchVBCX4Qd+itfQC6ue7bbwBO5nJEnbXBgoX9XXeEx0+l8EZ97SGd0Z1HPtY8hehpj0UNIWiDEKTGxbXm4j5L5MQdaLEDjHMLprpKsWpxIkfBHWIxxmmsMMFvMlT6VAuUQoyphX7DNPAyYuz9OFC2psMfTElZd/lclJIYYxeHv5nQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=L8mtqnjLi4kNeG5YL8rP4mt/bOBtcn2dMQro3SjjgVw=;
+ b=bOHubbMW72JVigHkYw9RIrPCryj32VTfqJZcvzSptuYCz3tgbuTTNcW481TxTQxbY1nrOVQmPj/xEg9hXpsQYBFH/YjTLVr+dyQeXmjFBZw5iDP2CcfiPQmLDHi4tov3Aj+Zn5rPBlFGBiL7uQn0g+UntqSWS7A5Z+3iA2qYw9s8EVEv1foMlEj1Zibf2MQpRKRayuHANN3oC2PDMsmKE7/ywAJ7E3s1VgobVn+AQijE1I771uQSNjUPGMGT5pkHWP+3d6wng8cCsAUjI1Y/f3fwVfPtulmK4cmowmlhXYFLuypSKnFwVWhwMay0NlSCCV97/pMWrLQfgzRWKLTcrQ==
+Received: from LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:25d::8)
+ by CWLP265MB5940.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:1cd::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.25; Mon, 24 Mar
+ 2025 13:48:09 +0000
+Received: from LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::bc82:c65b:66ee:6e5]) by LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::bc82:c65b:66ee:6e5%3]) with mapi id 15.20.8583.023; Mon, 24 Mar 2025
+ 13:48:08 +0000
+From: Selvasathya Shanmuganaathan <selvasathya_s@outlook.com>
+To: Selvasathya Shanmuganaathan <selvasathya_s@outlook.com>
+Subject: Email 1: Principal Repayment Confirmation
+Thread-Topic: Email 1: Principal Repayment Confirmation
+Thread-Index: AQHbnMGVrCOAFU3gDkiP9Ld1jyrMLw==
+Date: Mon, 24 Mar 2025 13:48:08 +0000
+Message-ID: <LO2P265MB5574C5D632A9A4D5230075C28BA42@LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-traffictypediagnostic: LO2P265MB5574:EE_|CWLP265MB5940:EE_|BL02EPF0001A0FF:EE_|LO0P265MB6897:EE_|LO2P265MB5574:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7852f750-81a2-4b35-7151-08dd6ada8489
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:14566002|5062599005|12121999004|461199028|8062599003|15030799003|8060799006|19110799003|7092599003|15080799006|440099028|3412199025|13041999003|12091999003|41001999003|3430499032|102099032|56899033|1710799026;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?rNk4KWicSgphcUfgh0akL0aqhpc+gW7H5XFHPQZlY4fvcNDhJUrBVcMEZkSg?=
+ =?us-ascii?Q?Tl4VSEfLJano9PVw+aTG10tepeTXY81gu2ezFlojjfHmi3uveEis8SIqrfKf?=
+ =?us-ascii?Q?akMBzrkdZ23AMMkUKQ9aHPdWQ9Ba6AQt2C9BZLaoLfNZncba3EfHKD9w/dMH?=
+ =?us-ascii?Q?ztUoNzjx8FQvKqgApzrmrx5U2dyYYjsaJqfglNB6Jj3QiPErSnCrOVCIqjp7?=
+ =?us-ascii?Q?tc0qcjZhBqH2haG1/N2e4dYZax8JAnbtIgFsn9Nz3I2wdGfYspVGu6Dp/ut9?=
+ =?us-ascii?Q?PwX2dY1kyynOrNIx0BbV1vLlqVkMjp1I1YBO9hEltak2cED5e8h3Bi6xkIvS?=
+ =?us-ascii?Q?ovfdfuCikYb5edRlhVwhHA8mOdtnf8ZdXeHCGf+fAU+2cR1y8kEtM8a8UQWm?=
+ =?us-ascii?Q?9fIbucX+71z0vwAL/2wtgsytAkL4LNwcKfNVBkvobTjLhNnhi5EOSGnK6YHV?=
+ =?us-ascii?Q?rptoSDzJEis/apFqwm/CuH2JN5uJEkUao+m6a3ha8GYMgspJGFYpTiikMZMP?=
+ =?us-ascii?Q?RqWxy/vcBugVQl13iyhOpLeu+FJLGPE0tuciZsxvDcub2UCcIWmVOSz8mfp9?=
+ =?us-ascii?Q?hCAuembWl8xx558ukQ8f8ECHwcCMb4vtv9Grl8ZrQ4On2SkZi8OdZwLLZkOa?=
+ =?us-ascii?Q?hMiXMS1j+EVT51qpGyFhptCtv4ru9QDLpTYTExpx+0eaKVX+YgqAN3OzSawH?=
+ =?us-ascii?Q?LDcpac/Ve/SAK+e1PpMrOhiUU2czCZYW+hMPZ7NhC/1FSYBVz1OZgRc48tAZ?=
+ =?us-ascii?Q?YhIRh0NrUpVC4unlXQavz5UAxvt95GWe+uYCxABxxsklYNS+PxH1BXbzF+qd?=
+ =?us-ascii?Q?0bCboPQDbdNEIOBJl736elccVyI9A92V8M+oO0hUAoIbLWrQvoyVhiCCVf6v?=
+ =?us-ascii?Q?J4E0KkmD4cg4S2m7P5rtkrudfTwZ0VxpHuYZiAHXiSTEhJauM4bIj4CqAZDF?=
+ =?us-ascii?Q?BV7w44fYpdZVWp9dTtZf/szkmKiwqO0ML9uJj9tBnOE/6ZMAgangG2pK8Qlw?=
+ =?us-ascii?Q?Q8ysZdsysgFGtf9TbLhnX+D+joufpXDTefWYPL9sskxsUmO8sWljjVAJr59x?=
+ =?us-ascii?Q?0mB5gAkD0LT6pkgfDG8NXuRMjjmPZdyIMEITiH9pYnRf3aFDiW02MHuKTUEl?=
+ =?us-ascii?Q?DuRDXgq4sQsqVVRj6bxqVizQKDgl9RsE+EjDMzEHA4GKjqgW9Q4Ny0PzkBMC?=
+ =?us-ascii?Q?jbcGBr5WwsGWZx1eVJxPn+Br6/Q0cuFsjxq8r2cPY6QcnT2WnLBbCzAFrxCX?=
+ =?us-ascii?Q?9X0OM/nEe/8tfH1X0PdBIQNRQpqHldMwcfnlRDGA7245GfoI1i+x2QU/Qyrv?=
+ =?us-ascii?Q?qh/p2Wfk2TCNQROW/pq8AoXnuqFI/pzj8Ut5vz8MaN3bfA=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?Windows-1252?Q?3nSvbvU5CHMYBENB/elNDYYs2s52ersy3B6EcwJ3OhgEXiJZEaEknn0y?=
+ =?Windows-1252?Q?Id0ibQfshMpTRXjDWeA+9IU51UvI4qRR+itObKYB86R5vnTmdKav3KUI?=
+ =?Windows-1252?Q?l4/IcbRA6BGtg1cKWzMwjUqoXdWTd3xLsFSEzJbwHHDJ0pbq+gk02rC0?=
+ =?Windows-1252?Q?M96P9HSXxoT02f0nYSAq3ZOR6San47aP/RMyOu2CiqL/SUNUnuVRoPML?=
+ =?Windows-1252?Q?e/41zIgTPKu9gDMdxxJtpNsbMcWalvOzfmIaKm46Z6hR7OTmHoPR/uwh?=
+ =?Windows-1252?Q?G0S/eI0ZrqJM0SAejtsu996Y0uodoZE1uiUvIte5JQrKyQ1gK2ekCyT3?=
+ =?Windows-1252?Q?NFHMolxquICVsZ41UZTv34+YA/P4JnuCqYObxZL04zqbs+hEgbEGFtz/?=
+ =?Windows-1252?Q?Ci5S5pl1IV1H0mL5TZl14WtwcOePhpXqpuEbqlmSsa5wD27ylLK/4NRv?=
+ =?Windows-1252?Q?cLVdKFZIcu0AJnfZ2bqLbMO+A5MHNEdyTQr2cxBHiwvdJyjqwfSxx4+p?=
+ =?Windows-1252?Q?iGWZttck82kSUltyMcarJqZl2X7aVry+T+oswQIgAr/8qseYvIPV6ynu?=
+ =?Windows-1252?Q?4Y7bts6Pdo2IRE1stMAnuACr0tl6xza4/wpUnIB/IG1CAH3MfqKrQkMU?=
+ =?Windows-1252?Q?/K4mCzK2IP1UwbBmjgKTDFxjyto5vBpSckwIhgqX8/InHq0XDi56Kx8l?=
+ =?Windows-1252?Q?8Xt7eteKaBg7TFtPp5mpi2A9RCi6Mkb2RniECJYFaLyUW79MoIwQJpnN?=
+ =?Windows-1252?Q?mG2/77PDvO0nFvE6L9knjC6eCaFW7PT2AwdOCJTe7qMKMGIt4bMPOXHP?=
+ =?Windows-1252?Q?qu8fxqSLEfoGKGmtiX+wPBEWroCZ/JWMrYJte4vZAovcS6JIDNfUH12i?=
+ =?Windows-1252?Q?tRQXAcBashvPZY0AeD8O8eKYNmOympZD908v0vz+kUW8Vr5YBMjdYdAi?=
+ =?Windows-1252?Q?tpyWYKANZfPD2wWXQHdLZiXfBz7b0Fr880o5oko29PbLpLCKj9Grthmy?=
+ =?Windows-1252?Q?IOAuGF/IMCBU9+DD8AQm32xzLdqZ8266pEkBp4/SVrThYrN460Vfr45i?=
+ =?Windows-1252?Q?DrPaBR54m6mQZUMOwfjinY/8cZSTWLnV/4nyYRLcENfV96gl9u/8f37K?=
+ =?Windows-1252?Q?F9Hy0CpRiMYWHcoKKhU/GfxxxMAuwc1UEZusHCYtuUx/dIJ8KFyaUOwD?=
+ =?Windows-1252?Q?8Gua7CIhBHC/KamEj/8L/qDhe4FzHZZ+jFVZWVa7I+QtOfOuFsA/POT3?=
+ =?Windows-1252?Q?Qnx3F6n4BSsEKi1Yb/4NRz2oD5vPGREpZYuGbaKHdgYKYF7shR/BpfCP?=
+ =?Windows-1252?Q?50ziVPlvDOAvEIzaTNcMKJSWpPxc3oM0i+md6ukguAvNHTicW0169Ear?=
+ =?Windows-1252?Q?IunotQEPbX8LPtCTEvZddXdsscMcE5l61XQ=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_LO2P265MB5574C5D632A9A4D5230075C28BA42LO2P265MB5574GBRP_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP265MB5940
+X-IncomingHeaderCount: 37
+Return-Path: selvasathya_s@outlook.com
+X-MS-Exchange-Organization-ExpirationStartTime: 24 Mar 2025 13:48:11.5493
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 7852f750-81a2-4b35-7151-08dd6ada8489
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: BL02EPF0001A0FF.namprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: BL02EPF0001A0FF.namprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: BL02EPF0001A0FF.namprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/24/2025 1:47:19 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 3fc35318-74f9-42f0-165e-08dd6ada828a
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.103.37.48
+X-SID-PRA: SELVASATHYA_S@OUTLOOK.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|7140799003|19300799024|461199028|440099028|3412199025|1360799030|1370799030|1380799030|56899033|1710799026;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2025 13:48:11.3149
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7852f750-81a2-4b35-7151-08dd6ada8489
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0FF.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO0P265MB6897
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.4343458
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8583.000
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:I;OFR:SpamFilterPass;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90011020)(91015020)(91040095)(9050020)(9060121)(9081003)(9100341)(1000006)(944500132)(2008001181)(4810010)(4910033)(9920006)(9510006)(10105021)(9320005)(9230038)(120001);
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?Windows-1252?Q?cSTZL+NBljjFBOV3halK/+MA/MzBv09o8mc4eQOjWsxr5lF3FWxaRpqg?=
+ =?Windows-1252?Q?cdpABVSdg3Um7sj/eNY8+GEGtvlv2swz7QD66N8/YTN+1vaFvuMRDYcp?=
+ =?Windows-1252?Q?3or2DePYAepKHCOtoZvZVm4DttH/+3Ft8pRmD70YnEx/3vC4/bzPXmhI?=
+ =?Windows-1252?Q?9BWk/77+klfjbrjRCCymwGgoWHDXzWLbI/HzoSbGzeTSMnaoyLR7TtJm?=
+ =?Windows-1252?Q?Oz4Y4PRZJTqM9aRLw5OiYIxydynECqd7RTACwvXrjCHvMCVQfJhbkMOy?=
+ =?Windows-1252?Q?ufMefWEuOp0Jbddt7bym1RcstGJ0CCRfsobAkr8fUuZE6OoxFEei6kUf?=
+ =?Windows-1252?Q?K7H0MW0jO08y4byjFsQrWD/nc9JohFjdd08tgQcFEoPL9yayy0ebfrkr?=
+ =?Windows-1252?Q?Is6TU8k6Yy7KrplzRf1McE8f/ZAvq/e8QV2N2fV1EiTOimOVPdxOyfrA?=
+ =?Windows-1252?Q?ixcwqVrO83yGEbHY7LLTgr1imSSAUqQi3b8VAuFAYimndaMVPPUX7bUF?=
+ =?Windows-1252?Q?9ttEfSTFkhvKvGAL9xyIue+AW3iFlw9ebujWq3S8WofR5+xLIhMWJpyW?=
+ =?Windows-1252?Q?ZU6zmEkUtDVBmdYwYamN2yZ2okUZkz1cu6cobBRDn/g1/UfROM5l76jD?=
+ =?Windows-1252?Q?RqnN/dchY/cDZRnTY8Ny7/OcTpswArk5nF7vYDFuBNuv5VOkYaaGVFD7?=
+ =?Windows-1252?Q?dkznDIZgRsax2gbn2EiPNxCSinR3MdmkWOai8FN/ekrx5tvi2sTEbCXm?=
+ =?Windows-1252?Q?we4JiLogoKuAsjyafk+BJ/FtfE1XDZ5O6Zw2eMAwQOj5v+f12Y6ptDD+?=
+ =?Windows-1252?Q?2piUYpZT6a2sOY5CzZujAdP65wOg/F6ocZtNihsatW4YTGOcOmF2BZc7?=
+ =?Windows-1252?Q?giknpJ11IRqNP9FirK2+AHs9iq+3HRWw45lgV6US8BK4qcHnEf4E7DDR?=
+ =?Windows-1252?Q?dKWYWIAQqJHglXG3k/tC6Fhg/boAp6fPIX318P6lzzLBakXR6FzGIqYA?=
+ =?Windows-1252?Q?oPdOPzXJaPZyeW8ZydIVCsl8LRtvgpxkaqfQukP1isuxwuyf/2N6eQ5w?=
+ =?Windows-1252?Q?fLWvGjkfaIEpLr8JQtsTY6Ve0Ovy4TX2XrY594S6L3iUF5LRV68Y5PjL?=
+ =?Windows-1252?Q?m3Dv8IXqMzLqFcyTR94ZQiChaZ+S3BkQ4IWUV00z/aOkOWYUNPKKFrUl?=
+ =?Windows-1252?Q?/rCtuiqLXDbaXJAOEiymCDXCS1wAAuXkn1uW3QQ/W99RFeX3NRhZOUaj?=
+ =?Windows-1252?Q?SFSvjgtsKq9nBJtyCyPblUQ9Tu/PwZjVu0ikyhJ+DTrBEnqrK38GB8LF?=
+ =?Windows-1252?Q?OzDSyrNjlhWAJ2iMwxR59SGhDs0Luhlrzow44zS1Fwy70HmO4Xj5ZZBl?=
+ =?Windows-1252?Q?iWyeQvBEu9zen7sg4XkNUf/8HNJeRwARyV386wyLFhpJ5fcNLhyGzq6O?=
+ =?Windows-1252?Q?TJIQ5Eu2r8ApchUxo7EdtmQtp7yBvHX3BWIeLz5Yky66w6cMcjYW2lbT?=
+ =?Windows-1252?Q?tiZq8Gg6TcsWGe6ERP5PxxKXOVCWoLtJ9/aE9ntLrUcKOUHTM0YSEAKi?=
+ =?Windows-1252?Q?SZdu+lfkSzt9wcygijWqwD6CHTbpC9qSgdVvCXuZ1hChGUBrB9PG/plX?=
+ =?Windows-1252?Q?GRuah+oNU2BaZwy2qF1E7QrmgZpitm2e0WzJ4/9JfdvXTw/hDK+xblrh?=
+ =?Windows-1252?Q?VvTjHQMbQKnvCl5yCAbyQGrOS4G+z9CpX0OS3+sGOtLJ00jEx+pGmf1b?=
+ =?Windows-1252?Q?Kc2D3mkJ6bn6HBc2+L7fPrixaG9YhTN7Rw7Ya8Vh58N+pheKwQHK2rUQ?=
+ =?Windows-1252?Q?68AmIYPtWVG8F4c219c79PFalLGenZ44+OUBA8WJVtT2Il4oSQAw4LcS?=
+ =?Windows-1252?Q?YowQt/9NnZwZDwMgvuuwd4bM76Vd1+GF+S74vjSJsXFsvJHOUrb/uejO?=
+ =?Windows-1252?Q?uBf7gtWDYR+nrWWgy0Ci0AdLJjVFN1MH1CEjGfEvDDfVaOvtVQDLnC0t?=
+ =?Windows-1252?Q?n4M/Y1VFvU1qMbqaqwyUWkepGEj3E5GdVAVD56R87trUbucmrc5+2m7m?=
+ =?Windows-1252?Q?N8Re1j7d0QiMVXm0Iu45YUrwaNnrUu84nTpCgf0YM0Hjs95V8Reh28P9?=
+ =?Windows-1252?Q?6EeGQOgLd4iFH/l/15H3Usy9dduXwsLLwav52tbpTisfMcD0UXG11ot8?=
+ =?Windows-1252?Q?fpV2xwOPFnbbz10oWJ0ZIxru5MJ5phZhUj6yogI3lepauqtlMRPR2x0q?=
+ =?Windows-1252?Q?6uz92BCfN7UHVY4HRkodXy9ZRMyrL/qeQq5VAtoS?=
+MIME-Version: 1.0
+
+--_000_LO2P265MB5574C5D632A9A4D5230075C28BA42LO2P265MB5574GBRP_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Sunrise Bank Corporation
+123 Financial Street, New York, NY 10001
+Date: 15-Apr-2025
+ATTN: John Doe
+Phone: +1 (212) 555-7890
+Fax: +1 (212) 555-7891
+Email: johndoe@wellsfargo.com
+Re: ABC Holdings LLC =96 Principal Repayment
+Deal CUSIP: 123456A78
+Deal ISIN: US1234567890
+Facility CUSIP: 987654B32
+Facility ISIN: US0987654321
+Lender MEI: LND098765
+Effective 15-Apr-2025, ABC Holdings LLC has elected to make a principal rep=
+ayment of $250,000 against the loan amount of $5,000,000.
+
+  *
+Previous Global Principal Balance: $4,750,000
+  *
+New Global Principal Balance: $4,500,000
+
+This loan was effective on 01-Jan-2024 and is scheduled to reprice on 01-Ju=
+l-2025.
+Your share of the repayment is $250,000.
+We will remit $250,000 on the effective date. Please note that if:
+(i) the Borrower has not made such payment;
+(ii) any payment you receive is in excess of what was paid by the Borrower;=
+ or
+(iii) we notify you that the payment was made in error, you agree to return=
+ such payment.
+For: Sunrise Bank Corporation
+ABA Number: 111002348
+Account No.: XXXXXXXX4720
+Reference: ABC Holdings LLC =96 Principal Repayment
+Thanks & Regards,
+Jane Smith
++1 (646) 555-1234
+Sunrise Bank Corporation
+
+
+--_000_LO2P265MB5574C5D632A9A4D5230075C28BA42LO2P265MB5574GBRP_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>Sunrise Bank Corporation</b><br>
+123 Financial Street, New York, NY 10001</div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>Date:</b>&nbsp;15-Apr-2025</div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>ATTN:</b>&nbsp;John Doe<br>
+Phone: +1 (212) 555-7890<br>
+Fax: +1 (212) 555-7891<br>
+Email: johndoe@wellsfargo.com</div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>Re:</b>&nbsp;ABC Holdings LLC =96 Principal Repayment</div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>Deal CUSIP:</b>&nbsp;123456A78<br>
+<b>Deal ISIN:</b>&nbsp;US1234567890<br>
+<b>Facility CUSIP:</b>&nbsp;987654B32<br>
+<b>Facility ISIN:</b>&nbsp;US0987654321<br>
+<b>Lender MEI:</b>&nbsp;LND098765</div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+Effective <b>15-Apr-2025</b>, ABC Holdings LLC has elected to make a <b>pri=
+ncipal repayment of $250,000</b>&nbsp;against the
+<b>loan amount of $5,000,000</b>.</div>
+<ul data-end=3D"722" data-start=3D"620">
+<li style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, C=
+alibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<div style=3D"margin-top: 1em; margin-bottom: 1em;"><b>Previous Global Prin=
+cipal Balance:</b>&nbsp;$4,750,000</div>
+</li><li style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
+ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<div style=3D"margin-top: 1em; margin-bottom: 1em;"><b>New Global Principal=
+ Balance:</b>&nbsp;$4,500,000</div>
+</li></ul>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+This loan was effective on <b>01-Jan-2024</b>&nbsp;and is scheduled to repr=
+ice on <b>01-Jul-2025</b>.</div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>Your share of the repayment is $250,000.</b></div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+We will remit <b>$250,000</b>&nbsp;on the effective date. Please note that =
+if:<br>
+(i) the Borrower has not made such payment;<br>
+(ii) any payment you receive is in excess of what was paid by the Borrower;=
+ or<br>
+(iii) we notify you that the payment was made in error, you agree to return=
+ such payment.</div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>For:</b>&nbsp;Sunrise Bank Corporation<br>
+<b>ABA Number:</b>&nbsp;111002348<br>
+<b>Account No.:</b>&nbsp;XXXXXXXX4720<br>
+<b>Reference:</b>&nbsp;ABC Holdings LLC =96 Principal Repayment</div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>Thanks &amp; Regards,</b></div>
+<div class=3D"elementToProof" style=3D"margin-top: 1em; margin-bottom: 1em;=
+ font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
+etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+Jane Smith<br>
++1 (646) 555-1234<br>
+Sunrise Bank Corporation</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+</body>
+</html>
+
+--_000_LO2P265MB5574C5D632A9A4D5230075C28BA42LO2P265MB5574GBRP_--

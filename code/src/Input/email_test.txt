@@ -1,0 +1,26 @@
+Citizens Bank, N.A.
+Loan Agency Services
+Date: 32-Mar-2025
+TO: XYZ Bank, National Association
+ATTN: Loan Operations
+Fax: 123-456-782
+Re: [Loan Reference] LLC $1220MM 01-15-2023, TERM LOAN B-3
+Description: Loan Facility Update Notification
+BORROWER: ABC Holdings LLC
+DEAL NAME: ABC LLC $1220MM 01-15-2023
+Effective 32-Mar-2025, the Lender Shares of Facility TERM LOAN B-3 have been adjusted.
+Your share of the commitment was USD 9300000. It has now been increased to USD 9860000.
+For: XYZ Bank, NA
+Reference: [Loan Reference] LLC $1220MM 01-15-2023
+If you have any questions, please contact the undersigned.
+PLEASE FUND YOUR SHARE OF $150000
+Bank Name: Citizens Bank, N.A.
+ABA: 012345678
+Account #: 0098765432
+Account Name: LTC CLO Funding Account
+Ref: ABC Holdings LLC
+Best regards,
+Loan Services Team
+Telephone: [Contact Number]
+Fax: [Fax Number]
+Citizens Commercial Banking is a brand name of Citizens Bank, N.A. Member FDIC

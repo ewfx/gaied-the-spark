@@ -1,0 +1,458 @@
+Received: from CWLP265MB5307.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:1c4::14)
+ by LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM with HTTPS; Sat, 22 Mar 2025
+ 14:49:03 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=gMpPI5t3sFbJTCkOL+4BfyKynyRHAimsXZCrMIf3BbLWROOkzGSHCmnqw9fKrn8QEFcP/2TtgLCPGaHQ/Oqwah1NGgcvy+g2ju8cHlNa7mhMLYqDul4AgzJ7k0uYcP5NRg9b5kmVvg/IRbIW7joLlOPq1dhmBCpD0yNJSgNqcBPrtYh1jnqQJXgh7GggWkVRuyjebs2jMRATUZwfevUtBRspl6t4B8GU7AppzvH54n7PaRxwM909XSyOHLIoHiXt3+U5GNFRzUW4/xgOXKStB53PoDx+Gue4zVU9BZiviihhYBvGQShzJnYZou7FuEKqp0NteS8q4yelR7Vw05uMMw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BmwBnMFAd9oxCVNmHgNvSDeby1VL+ThcGx1/2MVsnXg=;
+ b=iXaAwneOPpEML+18Gno9LIhG/P1zTGeJlUkbyYM9+ZogaTCqm6DR2uypwRJB+/SrWwZukR6H2tc1pKnM/pf7OcyxHE0L8A/brhrLME2Ylas87yAj/7oyFr3NVcJ7P2RvaljakvAvyF3QKILbLkRyatUrfIQUD3e32ivJqkkhgW2myLzAEBFDJNuSOBAz3+vxkW0yitUjhfwzC/+2RG9hsiZPYSbwOvzhfhWAPVNfbkwHA5yBEGHSOOfDfHNukdDgkFWYWfHJ/AiRnbn4W+gseAQfdZev/Yomkn8rFW/HiyjHkwkhoErgBFbZ5E8lo1CIDLgFk0IQqugmKSmjBV1JrQ==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.103.37.26) smtp.rcpttodomain=outlook.com smtp.mailfrom=outlook.com;
+ dmarc=pass (p=none sp=quarantine pct=100) action=none
+ header.from=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com; arc=pass (0 oda=0 ltdi=1)
+Received: from BN0PR02CA0020.namprd02.prod.outlook.com (2603:10b6:408:e4::25)
+ by CWLP265MB5307.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:1c4::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.16; Sat, 22 Mar
+ 2025 14:49:02 +0000
+Received: from BL6PEPF00022575.namprd02.prod.outlook.com
+ (2603:10b6:408:e4:cafe::4a) by BN0PR02CA0020.outlook.office365.com
+ (2603:10b6:408:e4::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.40 via Frontend Transport; Sat,
+ 22 Mar 2025 14:49:01 +0000
+Authentication-Results: spf=pass (sender IP is 52.103.37.26)
+ smtp.mailfrom=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com;dmarc=pass action=none
+ header.from=outlook.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of outlook.com designates
+ 52.103.37.26 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.103.37.26; helo=LO2P265CU024.outbound.protection.outlook.com;
+ pr=C
+Received: from LO2P265CU024.outbound.protection.outlook.com (52.103.37.26) by
+ BL6PEPF00022575.mail.protection.outlook.com (10.167.249.43) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.20
+ via Frontend Transport; Sat, 22 Mar 2025 14:49:00 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:EDB3DC3354648ABB6CB59638B72E2C77FF7A1316881A0E15826CCAD0FE5D7359;UpperCasedChecksum:7DE30F310C4AC7D46B6DC039F42BFC7C6EEDF29A7584B67A380E57A332D78A8D;SizeAsReceived:7817;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZNb7qeI/jhTT+46KlF69aR5QwCnPG5o3S/FYXnhX860Anjvc9hDQjmRDR+yE4ynhebR+OdpBuAeFYFp6W/P0104MT5RGy2omk8t+hs1bvtmZcivJrknnCnEKHFvnmVYX5cx9Qk2ep0L6FjjXXXNbpn28S8YVqB9LhVhmMzTNz0xUM/dFFUItkRlBgJgqisc41KDtGPujBpXF/DSeI8uMPNHP37CBhYqeYDnmI5qGfiwceYCfQNJst0mYwq+AENtcsTHMVDktiOo1+0vx+N1GAe8UBzwRswflzvfYO0IQQGKSaWCoFDlh25pJ8Huf/baiT2rad6GGV9ONFSDJCy+z9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BmwBnMFAd9oxCVNmHgNvSDeby1VL+ThcGx1/2MVsnXg=;
+ b=OHYICMK0otJjEfB1Q1HsL3c7Ai/NE2fBkQ1TV+e/v3M5l7i55rC34CnO0aa9Q0SmAa2UbCyv+a8u29lwX6r+2NdJlA2N6jYvD4FA4sBBbBIkHmwNqH7Py9vWS/tnh5X3OzMy2ov8MfkGrlFa7rzVFhSHoZl38TEE7GvCYRQUUPJ0+sw/zn4Fr4AzRiEMcJBGz0Ge/2zV+E2u0lEbofTQoqEtr4atvhjIBXo6Vc1aAeh5TXMuD+vkZDNOaTwnhK8rupg1wjz+YYHQvA1lNL0c4/3bVoa/hXfiN2/gUaHbRbu4P4yu6KPwGShwpcVEAP5Sd2heMxjbFFl3VSEV+XwpLw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BmwBnMFAd9oxCVNmHgNvSDeby1VL+ThcGx1/2MVsnXg=;
+ b=WalkpT68v63fP+ENzDNn7n6p4DTybKf1mysTUtzGVCy3p5/WJlTojngYtYtDGfCOx2jjSOvd6HYuNBHJuoXx4hwqNuJ5UvFHHSSgkD7GoBYqQmEku8o0z01EGzP5sBIyzPX4eChqh9RbmlVBwv9ZgXb4QPMfcc2jVd97B5MEEEXjFYCETJpnMy/EKV0xCZIcLQNPVhTOu1LvH35ABdwAm0bB4G/upNSQf4xIHghdKJ422KU5rSm+BPkTp+4ZNkvDp/yDPzK43cBrZwJ2pvvfDFLHncHXzFjc1ig3+e3SO5tVp/nfWZ8ZqdMiDaYycVLSzk0BuTMK1fuXmtFFY2l2iw==
+Received: from LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:25d::8)
+ by LO6P265MB7216.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:344::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.16; Sat, 22 Mar
+ 2025 14:48:59 +0000
+Received: from LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::bc82:c65b:66ee:6e5]) by LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::bc82:c65b:66ee:6e5%3]) with mapi id 15.20.8583.010; Sat, 22 Mar 2025
+ 14:48:59 +0000
+From: Selvasathya Shanmuganaathan <selvasathya_s@outlook.com>
+To: Selvasathya Shanmuganaathan <selvasathya_s@outlook.com>
+Subject: **Re:** CANTOR FITZGERALD LP USD 425MM MAR22 / REVOLVER / CANTOR
+ FIT00010   - 10
+Thread-Topic: **Re:** CANTOR FITZGERALD LP USD 425MM MAR22 / REVOLVER / CANTOR
+ FIT00010   - 10
+Thread-Index: AQHbmzXpMuEfuxTZhEyOLyVwH/82nw==
+Date: Sat, 22 Mar 2025 14:48:59 +0000
+Message-ID: <LO2P265MB55741E2BE0CEB9121121ABA58BDA2@LO2P265MB5574.GBRP265.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-traffictypediagnostic: LO2P265MB5574:EE_|LO6P265MB7216:EE_|BL6PEPF00022575:EE_|CWLP265MB5307:EE_|LO2P265MB5574:EE_
+X-MS-Office365-Filtering-Correlation-Id: d7d605ed-0c08-49e5-c316-08dd6950af0b
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:14566002|19110799003|12121999004|8060799006|8062599003|5062599005|461199028|15080799006|15030799003|7092599003|3412199025|440099028|41001999003|12091999003|3430499032|102099032|56899033|1710799026;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?tfh6T4sSecWQLl4UFd1LLYSYe9SiuPSS8ChECV7CcXXE/5J3VCHWdh1pnk+1?=
+ =?us-ascii?Q?e+pIcz4o0jUwWq7Gdth5GD5uOcRu+gpDvlDwcyzD3iv8x0/zPqJEP5/iLzVF?=
+ =?us-ascii?Q?8kcENTbKMmRe8VcD7WnBCEF0SRZ2N4rkmcsSFzlGeKFPKl8tmfxSs4W7VSMh?=
+ =?us-ascii?Q?2VT5Zwd3hxiEImWTHhFzQDbUFbPJ2E0smEZP/iFu5po79oEhcmrPHtK8UBNo?=
+ =?us-ascii?Q?5Sy3BdKLw7fquliaYdQA3lcu4tOKsnd70mqahdEyMfi+9ewS93myRMArGs4p?=
+ =?us-ascii?Q?egPZZfYPvFL0h84sXmLixi3e8ZGA9WQlUd0M3hFcoGGNFlDqiPEwsKFD8AmZ?=
+ =?us-ascii?Q?/GwIDngXjCGRtSA1ZMk4No4bSthWDa0dJ1ZCY6eXVip28EB9fjp8l5pvSNEV?=
+ =?us-ascii?Q?PCwzUmFnn7JGvAFd1F7mJ3qoPOBHg0BoYae6YdMCwdv+Sx41ZxU7wTmMd1Vk?=
+ =?us-ascii?Q?A2j7I8er7XYnlCwn2tzIv/yIBDzYWsuvctFpq53Gt6kuzlA2iEJ0bicc56yu?=
+ =?us-ascii?Q?X6KRzS0mmatflYqo1EHYG/gznLxnPFwRI7Gs3rX8w19HSDEPFFd4pnJtc+W1?=
+ =?us-ascii?Q?cPiL9zINeOe/fE9A9pwHYdd+mc8pLEtThTejvc+su1gtn5YxN1aUN35se2C4?=
+ =?us-ascii?Q?d++KnFQtiTxAZjBrVigaskCH7X8Da6w6AuqLIEmsByMdRL3fqD4SWm3cgHcY?=
+ =?us-ascii?Q?XGtpW+8iJgofThE6572mZVVNRw5MW714DAeKCDBG7DunW/R6lbBl3IvJhGbi?=
+ =?us-ascii?Q?RpPXGaSKaiMDVd0oPLpUTTDNquF198IXw8SINRNb6MHfqX8ijSYpieZnbymj?=
+ =?us-ascii?Q?QUI6nHRaXjVFSZphx0BvXA8IvbKuwrjNM7eAI8eNscUDDRpGnh31VkpNyOpn?=
+ =?us-ascii?Q?p6x3Q08QKtArDXgElJlF8IoMbwGu4mEtGQSgy6KkP6L9GMatT2b66YVbpJlB?=
+ =?us-ascii?Q?7JlvufHU1GXapYk9kD/KyUPuGUOYzd/n1vQwL8tYGlYjIg+bMCPXD1ocVco0?=
+ =?us-ascii?Q?Rj5NXwGdF2vuuhGEWnlQoDXsZ2wUlnoEVPjrQ2F0uE+ZY0WnuzwDqyD0tAAZ?=
+ =?us-ascii?Q?FAVIuCkjsTh1gbQcomGERefgI/3PvOXCxcgAEOPPPBu6aSMTVRcE8/HDc/NB?=
+ =?us-ascii?Q?x2UJ+/wvRBEb2zxnzFM6TNld1CAHxIo1sut05crPhjqtmlwWUWZtfWYPOdin?=
+ =?us-ascii?Q?9s2nlDOBrzm5eKhm4VOsy3972WAEUcNe0qSFh4SgjO6MOpssYXxyvHi5wUBc?=
+ =?us-ascii?Q?ThClmJNQ8WwTAuXNYovcPvBkY0jOHtp25tOqR+JWblbHw/VcmgfrNVAWxh8x?=
+ =?us-ascii?Q?kW0=3D?=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?iso-8859-1?Q?OH/wrHEI5KNcPnHllLDLQpF/9vyG3ftBRh6F43kCPQ052a4XFEh6vtgMuD?=
+ =?iso-8859-1?Q?jHnUAI9beu6tadLDt2w2MNVGUnFCT7g+z8mcwAB+J4fExiInMRTU7qqu0a?=
+ =?iso-8859-1?Q?V2ytNxvxrjjHdg0nY5AreSG/+ZgjwAv81IyjoYyfx7zbaPO4pMgvCmMFDe?=
+ =?iso-8859-1?Q?7C9ny7P9cKN2tpoy9gTdlLmgIZUh3+jA+XROe3yloxCfQhfQmyoam+C88p?=
+ =?iso-8859-1?Q?mEGqG+F1t1lAD1lLkPP9qzef179EJaFn+I0TPjiSd9MnhndJ3jfmBCm1FX?=
+ =?iso-8859-1?Q?UjvhZG7cGKjxaC41017tEkmxXdfy/yTaWHC+MDZADcVtM5Asm1AZw9GqoM?=
+ =?iso-8859-1?Q?PiUfuMTRf/mDCM4oHg0xLa+BIkmav/5gNlX2ML2G1yw/YHtY+8k0Dj/L+N?=
+ =?iso-8859-1?Q?J2N4KGc7Ww371gZJezfnDs39ztDTYC/qzBSqjzNkTjOgow36RD5bxUobCs?=
+ =?iso-8859-1?Q?wxv/AYrqP7PXfTiK12Absgfdzo0axKvuxNGuCMcn9K45O9HLePGtF6ZmqH?=
+ =?iso-8859-1?Q?9FpIqaZiCVOyTVKLwl/1p2XQL5+zSbZ3SToFJZg/Dx7pe4lX5gEWNd+slB?=
+ =?iso-8859-1?Q?k5GkT0DMkw3bbp0nijq/pDIvNvAdK5bqWuqWHD3bkHgpqp+1TfWSsJKKWy?=
+ =?iso-8859-1?Q?WXdvz9L8/+tG9wv1HEMPz2L91W/XLeMQNvcPG8nRgrEpnzYQuex8odQgod?=
+ =?iso-8859-1?Q?0/vwrUXL5qBpBXIOFJtBe3XYdqieqPjWbqkP0/KrQWwf5CFMP3LA0EnecC?=
+ =?iso-8859-1?Q?suvnDL3KPspEPE/tzzEtin/hdHAW4zAatpkNIwoUepL6QpklEYohYkPWZQ?=
+ =?iso-8859-1?Q?JLs7U0JMAJzWOepu1vdKZvdYIeuptSu6MOfOd5WpZPo7ytAeIXyi3Wxc4j?=
+ =?iso-8859-1?Q?c+hkOnXswfRsUVZysW66xNJA4VmWy8s79hH5EapTi4PA2jIaMoD3wcq0za?=
+ =?iso-8859-1?Q?2D7EIQO9q+uHGk8yEh9Iwj06RCsnc64j7XWKR87P8ZtipQqwQA5eGuWlI5?=
+ =?iso-8859-1?Q?PH0QhrklzuNFLyNIE1l9ItSSkSSEb0IdSEBB35ESNnvGg9q0JV8KMwVYdi?=
+ =?iso-8859-1?Q?k/FemS/hHec2HfD4GtRqhxB0MMWbMQ4InU7zE+jbf6mZBDbXiRUw5ydx6M?=
+ =?iso-8859-1?Q?QvsXcielJt05I+Wmys3k+lziowJV1zz4teAaRZ5O6PMuH9Rk7CGjlduTPP?=
+ =?iso-8859-1?Q?a7xCYCmh/zIedku14J2dU3wEaKtMFwNFe6O9/prp40Pq1+wSKwpAwB5sMp?=
+ =?iso-8859-1?Q?tH+mQagXFSPM4GHDFYJqaD+nX0B5i9PAAB4Yqu4FZyOC01/BW9hSJDYuZS?=
+ =?iso-8859-1?Q?z4bnaZK0xyKq8F+iAFoESnl32ekkC9d8N6KMsr4fx5o+UCo=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_LO2P265MB55741E2BE0CEB9121121ABA58BDA2LO2P265MB5574GBRP_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO6P265MB7216
+X-IncomingHeaderCount: 37
+Return-Path: selvasathya_s@outlook.com
+X-MS-Exchange-Organization-ExpirationStartTime: 22 Mar 2025 14:49:01.1562
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: d7d605ed-0c08-49e5-c316-08dd6950af0b
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: BL6PEPF00022575.namprd02.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: BL6PEPF00022575.namprd02.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: BL6PEPF00022575.namprd02.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/22/2025 2:47:50 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 6012ca21-d032-4bd4-4a09-08dd6950ae2a
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.103.37.26
+X-SID-PRA: SELVASATHYA_S@OUTLOOK.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|13020799006|19300799024|461199028|58200799018|47200799021|7140799003|440099028|3412199025|56899033|1370799030|1360799030|1380799030|1710799026;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2025 14:49:00.9531
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d7d605ed-0c08-49e5-c316-08dd6950af0b
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00022575.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP265MB5307
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0586108
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8583.000
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:I;OFR:SpamFilterPass;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90013020)(91025020)(91040095)(9050020)(9060121)(9100341)(1000006)(944500132)(2008001181)(4810010)(4910033)(9920006)(9510006)(10105021)(9320005)(9230038)(120001);
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?TFxeoSbqyC/XJETMBa4rwyowbCdYdnZ0JcRtvWU7+lDN4OqaVL22GMX3ce?=
+ =?iso-8859-1?Q?R8Bh0W/iN0NnRkb5k8AdZ/sTt3zqVK0shu8VVwhMgppV2eNENuTBL6PnUu?=
+ =?iso-8859-1?Q?WxiZ4grilBiT6wssTYh/rn3zQrK8osUZ3/wZCIOxxINl5cVdaBOAoRBvMI?=
+ =?iso-8859-1?Q?I5iX3NFf8Q2wFDx8xL/H/r4AY4qRxTQlhAkQAWKsJq9TSt3Pa+e5s4tCHq?=
+ =?iso-8859-1?Q?eiWtUIiDk2BnSzWbLEli4yjqSCx8ClLyLf1KSC+0jPWDTYL5ONytLqHU7a?=
+ =?iso-8859-1?Q?L4iSoRYd5ZuJm/WOQVCVdJtTVl3y/dnpdJGNWrgfe49eBtvLxWH5X2kgfg?=
+ =?iso-8859-1?Q?Q9xmPdrcTvfsKQhbYQrLSGy/lSm+rUhD2kulOmjwEQb0JuvAcK69Zb6CIP?=
+ =?iso-8859-1?Q?P/Ss7jk82hpj/sqFl6xWKkia/3RYY5QnCU0JBkF9gcT85OlVPI9MTP/No0?=
+ =?iso-8859-1?Q?zCLCAmy4SATUo2nHwX9+9O9FnHBJLkchJ7SlmZPCgzjdhrdkc4EbNISuYc?=
+ =?iso-8859-1?Q?e5xjiX568BQvQIk3BFl4G+m/5i1AWN13427WERax0pGQEwXhRHBT0c0xru?=
+ =?iso-8859-1?Q?k4MTPZTFKl2GTEzaDdaBkea0MVDl3f606M1wA2PIBZ5+TZj48T6QaXhQeY?=
+ =?iso-8859-1?Q?poNwlQ29srOQMmYXSjgt7+iYW38WiR+Ox9HyH+HOa+QdjUwpMZW3MQgNrV?=
+ =?iso-8859-1?Q?D6LxEQmAtef2MNuxI+PDuFzLx+PP5kCdYNkglaa+PSVMbngmRB3BGiFixN?=
+ =?iso-8859-1?Q?vZymwYqUdo3RgZUCMxoBfXqcAxIoyQCzsaNdMgIfCIkejpSNjIW9QzkMQD?=
+ =?iso-8859-1?Q?L4YTUksMG4A1cpBHo0xbSZN7Y4UuMYGQOUkLRTj5B/28rmbJeQkYrG9A7S?=
+ =?iso-8859-1?Q?NWlFBBj2BYYn6DmIlGo3XEvWcyQd8n3j5gQ0omGK1ikgDWQmjA/nd3K8Kc?=
+ =?iso-8859-1?Q?+GU9NF+rlKQxy4RZ0GhuKG62QzEjHFm9zOzNuM4+j7YFUPZ2gcVjdVr0US?=
+ =?iso-8859-1?Q?NoEcBAOR3aquRce3W0oIG7d3w1ngztaPFKf3ZUBQBZtQh7UgRpaWX1Q0Us?=
+ =?iso-8859-1?Q?Lge7Lb6DZeZJ2Mc4mdHNygoLJDoCXqMYNVYba4B+xyvP+1NHj3iN60hSwN?=
+ =?iso-8859-1?Q?fdqTom6WfKquMW0+XDmixNb8APrvlQsXvJJGV8TvZpeQWu6+Lx23PdW/km?=
+ =?iso-8859-1?Q?uh4VLaxgJC3koiKsKh1ffxGCvFeeQRPGMZ0E7j8CbrOiaFD2WzKbWcJSPb?=
+ =?iso-8859-1?Q?sK2R3lVyoICXhHnFrlIZ8FoDFQ7h/uC7aGwMxTcteZXaJc0S/8ZB6X9WC5?=
+ =?iso-8859-1?Q?EYuGpidXVZVnjvl1YnPsgd6VUMyi8eUlh3nE/nbOpsVCqwG49Ya9Mxn5bW?=
+ =?iso-8859-1?Q?kFJ61OsDwzWdLasvnzLuej7wp0HhSGJ8vM+zNlJu6gsl4qIKZrDQz+pzs3?=
+ =?iso-8859-1?Q?7dJ0Wvn86RM1ofLkru1kFQKUj2X9N4wu02/ivD52SXvWCBc4kSZsamspd+?=
+ =?iso-8859-1?Q?kdOZei+ZR217hiPG4qUdbMl2brQmYWRSOpOWwDULv+gOP2ulUI1VHMdoUP?=
+ =?iso-8859-1?Q?inyacHj0tUYNpJNXdaqb1Kop4JRyOJIBSE4JEgNN+aunzd7L26FX+l/bHV?=
+ =?iso-8859-1?Q?mrYN+Vk2bJJYEIKd0nlUOvzDyEL5VAE3JHZs/+9YgnmH1zJxwEKNh6cJ32?=
+ =?iso-8859-1?Q?gZCHctn+tVpIIgZ44BeUiMMDFQKbXVLQK0244JdxP/wWfTp8h17aU6fEOR?=
+ =?iso-8859-1?Q?iuyAiCdXfzs+cxpHVbrTBlATh/JRpqcRf5qdrRwn6UFn7uEQtfc8143HTm?=
+ =?iso-8859-1?Q?DVQQrvG7sLZ2Avg/DRC/MVBrHOkc36dHyvPJChJOgV1tkx21PZjupJbuvI?=
+ =?iso-8859-1?Q?V33e5VBEk6SrQHp1HHNaPPmF6WY/FPVBxc/CNYSmpB4FOryCVeX3n5tTXD?=
+ =?iso-8859-1?Q?HRynJfNHXaKQtOFx9hL5cfqcz447s/Nyce9Ldv17d+sn2pDCYYwhclJost?=
+ =?iso-8859-1?Q?6eHfvVHWG7pcNZX2JeRTiHBp6Q+uFJ3I4SfGGGnkVCnEerxNnyibxkMEZb?=
+ =?iso-8859-1?Q?/JuWJoRynnGaW1hoOMpx1d+MiFs/APwEVj1cg/Hz8Q6zkE81lUXmNm/CMT?=
+ =?iso-8859-1?Q?SC0+CTMdbY6dpnxzkzSMdEEJMu0uJY097sSwmiPMVl0CFIeurL82Q33wNY?=
+ =?iso-8859-1?Q?U+qVWJrQWR6tIzbH1cPEmKIRSePyc26HlZFXMBC/CLQcOcUK7LLNGwnJeU?=
+ =?iso-8859-1?Q?jhTQppDBDuOwCYnoJ3Y3Tp+1ceTilyuMkzRXoWmAov8FywXHukaZvxV9tz?=
+ =?iso-8859-1?Q?lpxgqMulCx+XdIc=3D?=
+MIME-Version: 1.0
+
+--_000_LO2P265MB55741E2BE0CEB9121121ABA58BDA2LO2P265MB5574GBRP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+BANK OF AMERICA
+Bank of America, N.A.
+
+**Date:** 15-Apr-2025
+
+**TO:** SUNRISE BANK CORPORATION
+**ATTN:** AGENT DEFAULT 10
+**Phone:** 999-999-9999
+**Fax:** 877-606-9426
+**Email:** agent10@sunrisebank.com
+
+**Re:** CANTOR FITZGERALD LP USD 425MM MAR22 / REVOLVER / CANTOR FIT00010
+
+**Deal CUSIP:** 13861EA10
+**Deal ISIN:** US13861EA10
+**Facility CUSIP:** 13861EAF10
+**Facility ISIN:** US13861EAF10
+**Lender MEI:** US1105842210
+
+Effective 20-Apr-2025, CANTOR FITZGERALD LP has elected to repay under the =
+SOFR (US) Term option, a total of USD 20,000,000.00.
+
+Previous Global principal balance: **USD 35,000,000.00**
+New Global principal balance: **USD 15,000,000.00**
+
+This loan was effective 20-Jul-2023 and is scheduled to reprice on 20-Apr-2=
+025.
+
+Your share of the USD 20,000,000.00 SOFR (US) Term payment is **USD 1,450,0=
+00.00**.
+Previous Lender Share Principal Balance: **USD 3,200,000.00**
+New Lender Share Principal Balance: **USD 1,750,000.00**
+
+We will remit **USD 1,450,000.00** on the effective date. Please note that =
+if the Borrower has not made such a payment or an excess payment was receiv=
+ed, you agree to return such payment.
+
+**For:** SUNRISE BANK CORPORATION
+**ABA Number:** 121000248
+**Account No.:** XXXXXXXXXX720
+**Reference:** CANTOR FITZGERALD LP USD 425MM MAR22 / REVOLVER / CANTOR FIT=
+00010
+
+**Thanks & Regards,**
+JONNY HERNANDEZ
+**Telephone #:** +19803883225
+**Email Id:** jonny.hernandez@bofa.com
+
+--_000_LO2P265MB55741E2BE0CEB9121121ABA58BDA2LO2P265MB5574GBRP_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+BANK OF AMERICA &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Bank of America, N.A. &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Date:** 15-Apr-2025 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**TO:** SUNRISE BANK CORPORATION &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**ATTN:** AGENT DEFAULT 10 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Phone:** 999-999-9999 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Fax:** 877-606-9426 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Email:** agent10@sunrisebank.com &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Re:** CANTOR FITZGERALD LP USD 425MM MAR22 / REVOLVER / CANTOR FIT00010 &=
+nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Deal CUSIP:** 13861EA10 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Deal ISIN:** US13861EA10 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Facility CUSIP:** 13861EAF10 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Facility ISIN:** US13861EAF10 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Lender MEI:** US1105842210 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Effective 20-Apr-2025, CANTOR FITZGERALD LP has elected to repay under the =
+SOFR (US) Term option, a total of USD 20,000,000.00. &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Previous Global principal balance: **USD 35,000,000.00** &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+New Global principal balance: **USD 15,000,000.00** &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+This loan was effective 20-Jul-2023 and is scheduled to reprice on 20-Apr-2=
+025. &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Your share of the USD 20,000,000.00 SOFR (US) Term payment is **USD 1,450,0=
+00.00**. &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Previous Lender Share Principal Balance: **USD 3,200,000.00** &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+New Lender Share Principal Balance: **USD 1,750,000.00** &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+We will remit **USD 1,450,000.00** on the effective date. Please note that =
+if the Borrower has not made such a payment or an excess payment was receiv=
+ed, you agree to return such payment. &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**For:** SUNRISE BANK CORPORATION &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**ABA Number:** 121000248 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Account No.:** XXXXXXXXXX720 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Reference:** CANTOR FITZGERALD LP USD 425MM MAR22 / REVOLVER / CANTOR FIT=
+00010 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Thanks &amp; Regards,** &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+JONNY HERNANDEZ &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Telephone #:** +19803883225 &nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+**Email Id:** jonny.hernandez@bofa.com &nbsp;</div>
+</body>
+</html>
+
+--_000_LO2P265MB55741E2BE0CEB9121121ABA58BDA2LO2P265MB5574GBRP_--

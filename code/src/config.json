@@ -1,13 +1,40 @@
 {
-    "request_types": {
-      "Loan Servicing": ["Loan Facility Update", "Loan Account Status Inquiry", "Interest Rate Adjustment"],
-      "Loan Origination": ["New Loan Request", "Loan Application Status", "Pre-qualification Inquiry"],
-      "Credit & Risk Assessment": ["Credit Limit Increase", "Financial Statement Review", "Covenant Compliance"],
-      "Information Request": ["Document Requirement", "Regulatory Compliance Inquiry", "General Inquiry"]
-    },
-    "key_attributes": [
-      "Loan Reference", "Borrower Name", "Bank Name", "Deal Name", "Commitment Amount",
-      "Interest Rate", "Payment Schedule", "Collateral Details", "Regulatory Compliance"
-    ]
-  }
-  
+  "request_types": [
+    "Account Inquiry",
+    "Loan Application",
+    "Transaction Dispute",
+    "Fraud Report",
+    "Payment Processing",
+    "Credit Limit Increase",
+    "General Support",
+    "Card Replacement",
+    "Loan Repayment"
+  ],
+  "sub_request_types": [
+    "Checking Account Inquiry",
+    "Savings Account Inquiry",
+    "New Loan Request",
+    "Loan Status Update",
+    "Unauthorized Transaction",
+    "Delayed Payment Issue",
+    "Fraudulent Activity Confirmation",
+    "Chargeback Request",
+    "Card Lost/Stolen",
+    "Card Activation Issue",
+    "Debt Restructuring",
+    "Early Loan Repayment"
+  ],
+  "key_attributes": [
+    "Customer Name",
+    "Account Number",
+    "Loan ID",
+    "Transaction ID",
+    "Date of Transaction",
+    "Disputed Amount",
+    "Card Number (Masked)",
+    "Fraud Type",
+    "Requested Limit",
+    "Payment Reference",
+    "Reason for Request"
+  ]
+}
