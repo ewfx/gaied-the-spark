@@ -9,6 +9,7 @@ import uuid  # For SR Number Generation
 from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
+import ReadEmailContent
 
 # Load API Key from .env file
 load_dotenv()
@@ -48,77 +49,120 @@ def generate_sr_number():
     random_part = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
     return f"SR-{date_part}-{random_part}"
 
-# Streamlit UI
+   
+def AnalyzeEmail(email_text):
+    # Process email when the user clicks "Analyze Email"
+    if st.button("Analyze Email") and email_text.strip():
+        with st.spinner("Preprocessing email..."):
+            clean_email_text = preprocess_email(email_text)
+
+        # Check if the email contains an SR number
+        existing_sr_number = check_existing_sr_number(clean_email_text)
+
+        # If SR number exists, mark it as a follow-up, else generate a new SR number
+        if existing_sr_number:
+            sr_number = f"Duplicate/Follow-up - {existing_sr_number}"
+        else:
+            sr_number = generate_sr_number()
+
+        final_prompt = f"""
+        You are an AI email analyzer for a commercial bank lending service team. Categorize the email and extract key details.
+        Return a **valid JSON** with:
+        - `request_type`
+        - `sub_request_type`
+        - `key_attributes`
+        - `main_intent`
+        - `confidence_score`
+        - `confidence_explanation`
+        {clean_email_text}
+        """
+
+        response = llm([SystemMessage(content=final_prompt), HumanMessage(content="Analyze this email.")])
+        try:
+            response_text = response.content.strip()
+            json_match = re.search(r"```json\n(.*?)\n```", response_text, re.DOTALL)
+            if json_match:
+                response_text = json_match.group(1)
+            response_json = json.loads(response_text)
+
+            # New Confidence Score Calculation
+            def compute_confidence(response_json):
+                W_Lexical = 0.25
+                W_Attributes = 0.30
+                W_Intent = 0.20
+                W_Ambiguity = 0.25
+
+                lexical_score = 1.0 if response_json["request_type"] != "Unknown" else 0.3
+                key_attr_score = min(1.0, len(response_json["key_attributes"]) / 5)
+                intent_score = 0.8 if response_json["main_intent"] else 0.4
+                ambiguous_terms = ["maybe", "not sure", "possibly", "check", "update something"]
+                ambiguity_penalty = 0.2 if any(term in response_json["main_intent"].lower() for term in ambiguous_terms) else 0.0
+
+                confidence = (W_Lexical * lexical_score) + (W_Attributes * key_attr_score) + (W_Intent * intent_score) - (W_Ambiguity * ambiguity_penalty)
+                return round(max(0.1, min(1.0, confidence)), 2)
+
+            response_json["confidence_score"] = compute_confidence(response_json)
+            response_json["sr_number"] = sr_number
+
+            st.subheader("📜 Final Output (Response)")
+            st.json(response_json)
+
+            st.subheader("🔢 Confidence Score")
+            st.metric(label="Confidence Score", value=f"{response_json['confidence_score']:.2f}")
+
+            st.subheader("📌 SR Number")
+            st.write(f"**{response_json['sr_number']}**")
+
+        except json.JSONDecodeError:
+            st.error("Error parsing AI response. AI did not return valid JSON.")
+            st.text(f"Raw AI Response: {response_text}")
+    return response_json
+
+# Create input folder if not exists
+INPUT_FOLDER = "input"
+os.makedirs(INPUT_FOLDER, exist_ok=True)
+
 st.title("📩 Commercial Banking Email Analyzer")
 st.subheader("1️⃣ Enter or Upload Email Content")
+
+# Text area for manual email input
 email_text = st.text_area("Paste email content here", height=200)
 
-uploaded_file = st.file_uploader("Or upload a file", type=["txt", "eml", "msg", "pdf"])
-if uploaded_file is not None:
-    email_text = uploaded_file.read().decode("utf-8")
+# File uploader for email files
+uploaded_files = st.file_uploader("Or upload files", type=["txt", "eml", "msg", "pdf"], accept_multiple_files=True)
 
-# Process email when the user clicks "Analyze Email"
-if st.button("Analyze Email") and email_text.strip():
-    with st.spinner("Preprocessing email..."):
-        clean_email_text = preprocess_email(email_text)
+# Process uploaded files
+if uploaded_files:
+    for uploaded_file in uploaded_files:
+        file_extension = uploaded_file.name.split(".")[-1].lower()  # Extract file extension
+        file_path = os.path.join(INPUT_FOLDER, uploaded_file.name)
 
-    # Check if the email contains an SR number
-    existing_sr_number = check_existing_sr_number(clean_email_text)
+        # Save uploaded file to 'input/' directory
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
 
-     # If SR number exists, mark it as a follow-up, else generate a new SR number
-    if existing_sr_number:
-        sr_number = f"Duplicate/Follow-up - {existing_sr_number}"
-    else:
-        sr_number = generate_sr_number()
+    st.success(f"✅ {len(uploaded_files)} file(s) saved in '{INPUT_FOLDER}' folder.")
 
-    final_prompt = f"""
-    You are an AI email analyzer for a commercial bank lending service team. Categorize the email and extract key details.
-    Return a **valid JSON** with:
-    - `request_type`
-    - `sub_request_type`
-    - `key_attributes`
-    - `main_intent`
-    - `confidence_score`
-    - `confidence_explanation`
-    {clean_email_text}
-    """
+# Loop through all files in 'input/' folder
+st.subheader("📂 Processing Stored Files")
+for file_name in os.listdir(INPUT_FOLDER):
+    file_path = os.path.join(INPUT_FOLDER, file_name)
+    file_extension = file_name.split(".")[-1].lower()
 
-    response = llm([SystemMessage(content=final_prompt), HumanMessage(content="Analyze this email.")])
+    st.write(f"🔍 Processing: `{file_name}`")
+
     try:
-        response_text = response.content.strip()
-        json_match = re.search(r"```json\n(.*?)\n```", response_text, re.DOTALL)
-        if json_match:
-            response_text = json_match.group(1)
-        response_json = json.loads(response_text)
+        if file_extension == "txt":
+            with open(file_path, "r", encoding="utf-8") as f:
+                email_text = f.read()
 
-        # New Confidence Score Calculation
-        def compute_confidence(response_json):
-            W_Lexical = 0.25
-            W_Attributes = 0.30
-            W_Intent = 0.20
-            W_Ambiguity = 0.25
+        elif file_extension in ["eml", "msg"]:
+            email_text = ReadEmailContent.extract_email_content(file_path)            
+        else:
+            email_text = "⚠️ Unsupported file format. Please use TXT, EML, or MSG."
 
-            lexical_score = 1.0 if response_json["request_type"] != "Unknown" else 0.3
-            key_attr_score = min(1.0, len(response_json["key_attributes"]) / 5)
-            intent_score = 0.8 if response_json["main_intent"] else 0.4
-            ambiguous_terms = ["maybe", "not sure", "possibly", "check", "update something"]
-            ambiguity_penalty = 0.2 if any(term in response_json["main_intent"].lower() for term in ambiguous_terms) else 0.0
-
-            confidence = (W_Lexical * lexical_score) + (W_Attributes * key_attr_score) + (W_Intent * intent_score) - (W_Ambiguity * ambiguity_penalty)
-            return round(max(0.1, min(1.0, confidence)), 2)
-
-        response_json["confidence_score"] = compute_confidence(response_json)
-        response_json["sr_number"] = sr_number
-
-        st.subheader("📜 Final Output (Response)")
-        st.json(response_json)
-
-        st.subheader("🔢 Confidence Score")
-        st.metric(label="Confidence Score", value=f"{response_json['confidence_score']:.2f}")
-
-        st.subheader("📌 SR Number")
-        st.write(f"**{response_json['sr_number']}**")
-
-    except json.JSONDecodeError:
-        st.error("Error parsing AI response. AI did not return valid JSON.")
-        st.text(f"Raw AI Response: {response_text}")
+        st.text_area(f"📄 Content of `{file_name}`", email_text, height=200)
+        AnalyzeEmail(email_text)
+    except Exception as e:
+        st.error(f"❌ Error processing `{file_name}`: {str(e)}")
+ 
