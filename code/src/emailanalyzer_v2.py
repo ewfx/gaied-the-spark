@@ -2,7 +2,6 @@ import os
 import re
 import streamlit as st
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
 
 # Load API Key from .env file
@@ -113,9 +112,9 @@ Email content:
     st.text_area("This is the full input that would be sent to the API:", final_prompt, height=300)
 
     # # Commenting out actual API call
-    response = llm([SystemMessage(content=final_prompt), HumanMessage(content="Analyze this email.")])
-    result = response.content.strip()
+    # response = llm([SystemMessage(content=final_prompt), HumanMessage(content="Analyze this email.")])
+    # result = response.content.strip()
 
-    # # Display the final output
-    st.subheader("📜 Final Output (Response)")
-    st.text_area("This is the AI-generated categorization result:", result, height=300)
+    # # # Display the final output
+    # st.subheader("📜 Final Output (Response)")
+    # st.text_area("This is the AI-generated categorization result:", result, height=300)
